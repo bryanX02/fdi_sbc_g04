@@ -1,0 +1,9 @@
+## Trabajos  
+desarrollador :- programacion, analisis
+ing_frontend :- web, programacion [0.8]
+ing_frontend :- web, soft_skills [0.6]
+ing_backend :- php, linux
+project_manager :- analisis, soft_skills, desarrollador [0.75]
+QA_tester :- analisis
+asesor_fiscal :- analisis, economia, soft_skills
+
