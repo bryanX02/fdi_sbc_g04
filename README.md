@@ -1,6 +1,6 @@
-#Práctica 2 - SBC
+## Práctica 2 - SBC  
 
-Estudiantes:
+Estudiantes:  
 
--Bryan Quilumba
+-Bryan Quilumba  
 -Jesús Rodríguez
