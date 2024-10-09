@@ -6,7 +6,7 @@ class Regla:
         self.cons = cons
         self.resto = resto
 
-    def leer_base(fichero):
+    def leer_base(self, fichero):
         texto = fichero.read_text()
         for line in texto.split("\n"):
             if line.startswith("#") or not line:
