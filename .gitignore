@@ -1,0 +1,28 @@
+# Ignorar archivos de entorno virtual de Python
+venv/
+.env
+
+# Ignorar archivos compilados de Python
+__pycache__/
+*.py[cod]
+
+# Ignorar archivos generados por la herramienta uv
+uv.lock
+
+# Ignorar archivos de configuración o logs locales
+*.log
+*.sqlite3
+
+# Ignorar archivos temporales de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de configuración de editor o IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignorar archivos sensibles o temporales
+*.env
+
