@@ -1,0 +1,33 @@
+# Base de conocimiento para una empresa de mantenimiento de hogares
+
+## Servicios
+electricista :- electricidad, instalacion
+fontanero :- tuberias, agua
+jardinero :- plantas, mantenimiento_areas_verdes
+limpieza :- productos_limpieza, organizacion [0.85]
+pintor :- pintura, preparacion_superficies
+carpintero :- madera, herramientas [0.9]
+albañil :- construccion, cemento, herramientas [0.8]
+reparador_aparatos :- electrodomesticos, diagnostico_fallos, herramientas [0.7]
+decorador_interiores :- diseño_interiores, colores, soft_skills[0.75]
+
+## Habilidades
+electricidad :- cables, instalacion [0.9]
+instalacion :- seguridad_electricca
+tuberias :- agua
+agua :- presion_agua, conexiones
+plantas :- riego, podado
+mantenimiento_areas_verdes :- cortado_cesped, fertilizacion
+productos_limpieza :- quimicos, ecologicos [0.7]
+organizacion :- planificacion, orden
+pintura :-  preparacion_superficies, colores
+preparacion_superficies :- lijado, limpieza_previa
+madera :- corte, ensamblaje [0.85]
+herramientas :- precision, mantenimiento
+construccion :- cemento, estructuras
+diagnostico_fallos :- electrodomesticos, prueba_circuitos
+diseño_interiores :- colores, espacio [0.8]
+colores :- combinaciones [0.7]
+soft_skills :- comunicacion_cliente [0.8]
+
+
