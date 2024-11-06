@@ -1,0 +1,17 @@
+# Base de conocimiento adicional de ejemplo
+
+q1:persona4 wdt:P31 q1:persona ;
+    t1:nombre "Diana" ;
+    t1:edad "28" .
+
+q1:persona5 wdt:P31 q1:persona ;
+    t1:nombre "Evan" ;
+    t1:edad "40" .
+
+q1:ciudad2 wdt:P31 q1:ciudad ;
+    t1:nombre "Barcelona" ;
+    t1:poblacion "1600000" .
+
+q1:persona4 t1:reside_en q1:ciudad2 .
+q1:persona5 t1:reside_en q1:ciudad1 .
+
