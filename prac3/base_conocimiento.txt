@@ -1,0 +1,21 @@
+# Base de conocimiento de ejemplo para probar el sistema
+
+q1:persona1 wdt:P31 q1:persona ;
+    t1:nombre "Alice" ;
+    t1:edad "30" .
+
+q1:persona2 wdt:P31 q1:persona ;
+    t1:nombre "Bob" ;
+    t1:edad "25" .
+
+q1:persona3 wdt:P31 q1:persona ;
+    t1:nombre "Charlie" ;
+    t1:edad "35" .
+
+q1:ciudad1 wdt:P31 q1:ciudad ;
+    t1:nombre "Madrid" ;
+    t1:poblacion "3200000" .
+
+q1:persona1 t1:reside_en q1:ciudad1 .
+q1:persona2 t1:reside_en q1:ciudad1 .
+
