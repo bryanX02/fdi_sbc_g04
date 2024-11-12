@@ -1,11 +1,6 @@
-# Carga de un segundo archivo de base de conocimiento
 load base_conocimiento_2.ttl
-
-# Mostrar el contenido de los archivos cargados
-mostrar
-
-
-
-# Termina la ejecución
-salir
-
+select ?item
+where {
+	?item t0:aficionado q0:LOTR .
+}
+draw "lotr.png"
