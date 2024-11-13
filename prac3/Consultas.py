@@ -1,10 +1,10 @@
 import re
+from GestorBase import GestorBase
 
 def realizar_consulta(gestor_base, consulta):
     # Extraemos las variables y la cláusula WHERE de la consulta pseudo-SPARQL
     patron = r"select\s+(.*?)\s+where\s*\{(.*?)\}"
     match = re.search(patron, consulta, re.DOTALL)
-
     if not match:
         print("Consulta no válida.")
         return

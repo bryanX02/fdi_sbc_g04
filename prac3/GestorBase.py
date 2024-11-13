@@ -1,6 +1,6 @@
 from pathlib import Path
 
-class gestorBase:
+class GestorBase:
     def __init__(self):
         # Creamos un diccionario para almacenar el contenido de las bases de conocimiento
         self.contenido_bases = {}
