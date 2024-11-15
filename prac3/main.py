@@ -29,7 +29,6 @@ def main(base, script):
         else:
             realizar_consulta(baseGestor, comando)
         return True
-# select ?asignatura, ?email where { ?profe t0:profesor ?asignatura . ?profe t0:email ?email . }
     # Ejecutar comandos desde el archivo si se proporciona
     if script:
         with open(script, "r", encoding="utf-8") as f:
@@ -40,7 +39,6 @@ def main(base, script):
                     if not ejecutar_comando(comando):
                         break
     else:
-        print("No script")
         # Interfaz interactiva para ingresar comandos manualmente
         print("Interfaz interactiva. Escribe 'mostrar' para ver el contenido, 'load <archivo>' para cargar más datos, o 'salir' para terminar.")
         while True:
@@ -48,6 +46,13 @@ def main(base, script):
             if not ejecutar_comando(comando):
                 break
 
+# CONSULTAS PARA PROBRAR:
+
+# select ?nombre where { ?persona wdt:P31 q1:persona . ?persona t1:nombre ?nombre . }
+# select ?nombre where { ?piloto wdt:P31 q1:piloto . ?piloto t1:nombre ?nombre . }
+
+# Equipos en los que ha estado Hamilton (piloto1):
+# select ?nombre where { ?equipo wdt:P31 q1:equipo . q1:piloto1 t1:equipos ?equipo . ?equipo t1:nombre ?nombre . }
 
 if __name__ == "__main__":
     main()

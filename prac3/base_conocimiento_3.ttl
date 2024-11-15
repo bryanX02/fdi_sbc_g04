@@ -1,0 +1,27 @@
+q1:piloto1 wdt:P31 q1:piloto ;
+    t1:nombre "Lewis Hamilton" ;
+    t1:nacionalidad "Británica" ;
+    t1:equipos q1:equipo1, q1:equipo2 .
+
+q1:piloto2 wdt:P31 q1:piloto ;
+    t1:nombre "Max Verstappen" ;
+    t1:nacionalidad "Holandesa" .
+
+q1:piloto3 wdt:P31 q1:piloto ;
+    t1:nombre "Fernando Alonso" ;
+    t1:nacionalidad "Española" ;
+    t1:equipos q1:equipo4, q1:equipo5 .
+
+q1:equipo1 wdt:P31 q1:equipo ;
+    t1:nombre "Mercedes-AMG Petronas" .
+
+q1:equipo2 wdt:P31 q1:equipo ;
+    t1:nombre "McLaren" .
+
+q1:equipo5 wdt:P31 q1:equipo ;
+    t1:nombre "Ferrari" .
+
+q1:circuito1 wdt:P31 q1:circuito ;
+    t1:nombre "Silverstone Circuit" ;
+    t1:pais "Reino Unido" .
+
