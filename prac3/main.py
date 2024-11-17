@@ -2,6 +2,7 @@ from pathlib import Path
 import click
 from Consultas import realizar_consulta
 from GestorBase import *
+from Visualizador import exportar_grafo
 
 # Implementar el sistema de interpretación de consultas al estilo de Wikidata Query Service
 @click.command()
@@ -13,21 +14,30 @@ def main(base, script):
 
     baseGestor = GestorBase()
     baseGestor.cargar_base(base)
+    ultimos_resultados = []
 
 
     # Función para ejecutar comandos
     def ejecutar_comando(comando):
+        nonlocal ultimos_resultados
         if comando.startswith("load "):
             # Cargar un archivo adicional
             _, ruta_base = comando.split(" ", 1)
             baseGestor.cargar_base(ruta_base.strip())
         elif comando == "mostrar":
             baseGestor.mostrar_contenido()
+        elif comando.startswith("draw "):
+            match = re.match(r'draw\s+"(.+?)"', comando)
+            if match:
+                filename = match.group(1)
+                exportar_grafo(ultimos_resultados, filename)
+            else:
+                print("Comando draw no válido. Usa: draw \"nombre_archivo.png\"")
         elif comando == "salir":
             print("Saliendo de la interfaz interactiva.")
             return False
         else:
-            realizar_consulta(baseGestor, comando)
+            ultimos_resultados = realizar_consulta(baseGestor, comando)
         return True
     # Ejecutar comandos desde el archivo si se proporciona
     if script:
@@ -40,7 +50,7 @@ def main(base, script):
                         break
     else:
         # Interfaz interactiva para ingresar comandos manualmente
-        print("Interfaz interactiva. Escribe 'mostrar' para ver el contenido, 'load <archivo>' para cargar más datos, o 'salir' para terminar.")
+        print("Interfaz interactiva. Escribe 'mostrar' para ver el contenido, 'load <archivo>' para cargar más datos, draw para dibujar el grafo o 'salir' para terminar.")
         while True:
             comando = input(">> ")
             if not ejecutar_comando(comando):

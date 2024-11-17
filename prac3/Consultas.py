@@ -7,7 +7,7 @@ def realizar_consulta(gestor_base, consulta):
     match = re.search(patron, consulta, re.DOTALL)
     if not match:
         print("Consulta no válida. Asegúrate de usar el formato correcto.")
-        return
+        return []
 
     # Extraemos las variables y las cláusulas WHERE
     variables = [v.strip() for v in match.group(1).split(",")]
@@ -19,17 +19,32 @@ def realizar_consulta(gestor_base, consulta):
     # Evaluamos las cláusulas WHERE
     resultados = backtracking(clausulas, contenido, {}, 0)
 
+    # Incluir predicados en los resultados
+    resultados_completos = []
+    for resultado in resultados:
+        for clausula in clausulas:
+            sujeto, predicado, objeto = clausula.split()
+            if sujeto in resultado and objeto in resultado:
+                resultados_completos.append({
+                    "sujeto": resultado[sujeto],
+                    "predicado": predicado,
+                    "objeto": resultado[objeto]
+                })
+
     # Mostramos los resultados como tabla
-    if resultados:
+    if resultados_completos:
+        # Crear encabezado con las variables seleccionadas
         encabezado = " | ".join(variables)
         print(encabezado)
         print("-" * len(encabezado))
+        
         for resultado in resultados:
             fila = " | ".join(resultado.get(var, "") for var in variables)
             print(fila)
     else:
         print("No se encontraron resultados.")
 
+    return resultados_completos if resultados_completos else []
 
 def backtracking(clausulas, triples, mapeo_actual, indice):
     if indice == len(clausulas):  # Si hemos evaluado todas las cláusulas
@@ -51,9 +66,7 @@ def backtracking(clausulas, triples, mapeo_actual, indice):
 
     return soluciones
 
-
 def evaluar_clausula(triple, sujeto, predicado, objeto, mapeo):
-    # Verificamos si el triple coincide con la cláusula WHERE
     sujeto_t, predicado_t, objeto_t = triple
 
     if not coincidir_valor(sujeto, sujeto_t, mapeo):
@@ -65,7 +78,6 @@ def evaluar_clausula(triple, sujeto, predicado, objeto, mapeo):
 
     return True
 
-
 def coincidir_valor(variable, valor, mapeo):
     if variable.startswith("?"):  # Si es una variable
         if variable in mapeo:  # Si ya está mapeada
@@ -75,4 +87,3 @@ def coincidir_valor(variable, valor, mapeo):
             return True
     else:  # Si no es variable, debe coincidir exactamente
         return variable.strip('"') == valor.strip('"')
-

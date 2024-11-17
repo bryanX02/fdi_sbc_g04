@@ -7,35 +7,56 @@ class GestorBase:
         self.contenido_bases = {}
 
     def cargar_base(self, ruta_base):
-        # Cargamos el archivo y procesar los triples
         base_path = Path(ruta_base)
-        tripletas = []  # Lista para almacenar los triples procesados
+        tripletas = []
         sujeto_actual = None
 
         with base_path.open("r", encoding="utf-8") as file:
             for line in file:
                 line = line.strip()
                 if not line or line.startswith("#"):
-                    continue  # Ignoramos líneas vacías y comentarios
-                
-                # Procesamos las líneas que terminan con ';' o '.'
-                if line.endswith("."):
-                    partes = re.findall(r'".*?"|\S+', line[:-1])
+                    continue  # Ignorar líneas vacías o comentarios
 
-                    if len(partes) == 3:
-                        tripletas.append(tuple(partes))
-                elif line.endswith(";"):
-                    partes = re.findall(r'".*?"|\S+', line[:-1])
-                    if len(partes) == 3:
-                        sujeto_actual, predicado, objeto = partes
-                        tripletas.append((sujeto_actual, predicado, objeto))
-                    elif len(partes) == 2 and sujeto_actual:
-                        predicado, objeto = partes
-                        tripletas.append((sujeto_actual, predicado, objeto))
+                # Concatenar líneas que continúan en la siguiente
+                while not line.endswith("."):
+                    next_line = next(file).strip()
+                    line += ' ' + next_line
+
+                # Remover el punto final y dividir en segmentos por ';'
+                line = line.rstrip(".")
+                segmentos = line.split(";")
+
+                for i, segmento in enumerate(segmentos):
+                    segmento = segmento.strip()
+                    if not segmento:
+                        continue
+
+                    partes = re.findall(r'".*?"|\S+', segmento)
+
+                    # Si es el primer segmento y contiene un sujeto, actualizar sujeto_actual
+                    if i == 0 and ":" in partes[0]:
+                        sujeto_actual = partes[0]
+                        partes = partes[1:]  # Eliminar el sujeto de las partes
+
+                    # Procesar pares predicado-objeto
+                    for j in range(0, len(partes), 2):
+                        if j + 1 < len(partes):
+                            predicado = partes[j]
+                            objeto = partes[j + 1]
+                            tripletas.append((sujeto_actual, predicado, objeto))
+                        else:
+                            print(f"Advertencia: Predicado sin objeto en línea: {line}")
 
         self.contenido_bases[base_path.name] = tripletas
-
         print(f"SBC_P3> Cargando '{base_path.name}'... OK!")
+
+
+
+
+
+
+
+
 
     def mostrar_contenido(self):
         # Mostramos el contenido de cada base cargada
