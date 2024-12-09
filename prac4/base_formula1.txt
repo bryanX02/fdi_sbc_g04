@@ -1,0 +1,14 @@
+Lewis Hamilton is a Formula 1 driver from Britain. He has driven for teams such as Mercedes-AMG Petronas and McLaren.
+
+Max Verstappen is a Formula 1 driver from the Netherlands.
+
+Fernando Alonso is a Formula 1 driver from Spain. He has driven for teams such as Ferrari.
+
+Mercedes-AMG Petronas is a Formula 1 team.
+
+McLaren is a Formula 1 team.
+
+Ferrari is a Formula 1 team.
+
+Silverstone Circuit is a Formula 1 racing circuit located in the United Kingdom.
+
