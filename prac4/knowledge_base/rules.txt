@@ -1,0 +1,4 @@
+Formula 1 races typically last 305 km or 2 hours, whichever comes first, except for the Monaco Grand Prix.
+Drivers must use at least two different tire compounds during a dry race.
+Safety Cars are deployed during incidents on track to ensure driver safety. Virtual Safety Cars (VSC) reduce the speed of all cars while maintaining gaps.
+Time penalties can be given for infractions like causing collisions or exceeding track limits.

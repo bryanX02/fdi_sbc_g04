@@ -1,0 +1,3 @@
+DRS (Drag Reduction System) is a feature that allows drivers to open a flap on the rear wing of their car, reducing drag and increasing speed. It can only be used in designated zones during a race.
+ERS (Energy Recovery System) is a hybrid technology used in Formula 1 cars to recover energy from braking and exhaust gases.
+Pirelli is the sole tire supplier for Formula 1. Different tire compounds are used in races, including soft, medium, and hard, each with distinct characteristics.

@@ -10,17 +10,81 @@ import click
 import os
 from pathlib import Path
 import ollama
+import string
+
+
+KEYWORDS_TO_FILES = {
+    "driver": "drivers.txt",
+    "team": "teams.txt",
+    "car": "teams.txt",
+    "circuit": "circuits.txt",
+    "race": "history.txt",
+    "championship": "history.txt",
+    "Ferrari": "teams.txt",
+    "Mercedes": "teams.txt",
+    "Hamilton": "drivers.txt",
+    "Verstappen": "drivers.txt",
+    "Monza": "circuits.txt",
+    "Silverstone": "circuits.txt",
+    "DRS": "technology.txt",
+    "ERS": "technology.txt",
+    "Pirelli": "technology.txt",
+    "rules": "rules.txt",
+    "penalty": "rules.txt",
+    "safety car": "rules.txt",
+}
+
+def extract_keywords(query, keywords_to_files):
+    """
+    Extrae palabras clave relevantes de la consulta del usuario.
+    Limpia puntuación y hace la búsqueda ignorando mayúsculas y minúsculas.
+    """
+    # Eliminar puntuación de la consulta
+    translator = str.maketrans('', '', string.punctuation)
+    cleaned_query = query.translate(translator).lower()
+
+    # Separar palabras y buscar palabras clave
+    query_words = cleaned_query.split()
+    relevant_keywords = [
+        word for word in query_words if word in [k.lower() for k in keywords_to_files]
+    ]
+
+    # Mapear las palabras clave encontradas a su forma original
+    return [k for k in keywords_to_files if k.lower() in relevant_keywords]
+
+
+# Función para obtener contenido del fichero relevante
+def get_context_from_files(keywords, knowledge_dir, keywords_to_files, debug=False):
+    """
+    Obtiene el contenido relevante de los ficheros en base a las palabras clave detectadas.
+    """
+    unique_files = set(keywords_to_files[keyword] for keyword in keywords)
+    context = []
+
+    if debug:
+        print(f"\n[DEBUG] Searching in files: {', '.join(unique_files)}")
+    
+    for file in unique_files:
+        file_path = os.path.join(knowledge_dir, file)
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as f:
+                context.extend(f.readlines())
+        else:
+            print(f"Warning: File {file} not found in knowledge base.")
+    
+    return context
+
+
 
 # Función principal
 @click.command()
 @click.argument("knowledge_dir", type=click.Path(exists=True))
 @click.option("--model", default="llama3.2:1b", help="Modelo de lenguaje a utilizar con Ollama.")
-def main(knowledge_dir, model):
+@click.option("--debug", is_flag=True, help="Habilita el modo de depuración para mostrar archivos consultados.")
+def main(knowledge_dir, model, debug):
     """
     Aplicación principal del asistente virtual.
     """
-    with open(knowledge_dir, 'r') as f:
-        context = [linea for linea in f.readlines() if linea != "\n"]
 
     print("Virtual Assistant ready. Type 'exit' to quit.")
 
@@ -30,6 +94,25 @@ def main(knowledge_dir, model):
         if user_query.lower() in ["exit", "quit"]:
             print("Exiting Virtual Assistant. Goodbye!")
             break
+
+        # Extraer palabras clave relevantes
+        relevant_keywords = extract_keywords(user_query, KEYWORDS_TO_FILES)
+        if relevant_keywords:
+            if debug:
+                print(f"\n[DEBUG] Keywords detected: {', '.join(relevant_keywords)}")
+            context = get_context_from_files(relevant_keywords, knowledge_dir, KEYWORDS_TO_FILES, debug)
+        else:
+            if debug:
+                print("\n[DEBUG] No relevant keywords found in your query. Using full knowledge base.")
+            context = []
+            if debug:
+                print("\n[DEBUG] Searching in all files:")
+            for file in os.listdir(knowledge_dir):
+                if file.endswith(".txt"):
+                    if debug:
+                        print(f"[DEBUG] Reading file: {file}")
+                    with open(os.path.join(knowledge_dir, file), 'r') as f:
+                        context.extend(f.readlines())
 
         messages = [
             {
