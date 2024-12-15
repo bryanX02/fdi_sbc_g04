@@ -1,5 +1,6 @@
 from Regla import Regla
 
+
 # Funcion que se encarga de leer, interpretar y cargar la base del conocimiento
 def leer_base(fichero):
 
@@ -12,26 +13,36 @@ def leer_base(fichero):
 
         # Si no es un comentario y contiene algo (no es linea vacia)
         if not line.startswith("#") and line.strip():
-            
+
             # Separamos entre cons y antecedentes
-            ants = line.split(":-") 
-            cons = ants[0].strip() 
-            
+            ants = line.split(":-")
+            cons = ants[0].strip()
+
             # Es un hecho
-            if len(ants) == 1:  
+            if len(ants) == 1:
                 antecedentes = []
                 # Buscamos el grado de verdad si está especificado entre corchetes
-                verdad = float(cons.split("[")[1].replace("]", "").strip()) if "[" in cons else 1.0
+                verdad = (
+                    float(cons.split("[")[1].replace("]", "").strip())
+                    if "[" in cons
+                    else 1.0
+                )
                 # Dejamos solo el nombre del hecho
                 cons = cons.split("[")[0].strip()
-            
+
             # Es una regla
             else:
                 # Separamos los antecedentes en una lista, eliminando espacios extra
                 antecedentes = ants[1].split("[")[0].strip().split(",")
-                antecedentes = [a.strip() for a in antecedentes] # Eliminamos espacios de cada antecedente
+                antecedentes = [
+                    a.strip() for a in antecedentes
+                ]  # Eliminamos espacios de cada antecedente
                 # Extraemos el grado de verdad si está especificado
-                verdad = float(ants[1].split("[")[1].replace("]", "").strip()) if "[" in ants[1] else 1.0
+                verdad = (
+                    float(ants[1].split("[")[1].replace("]", "").strip())
+                    if "[" in ants[1]
+                    else 1.0
+                )
             reglas.append(Regla(cons, antecedentes, verdad))
 
     return reglas

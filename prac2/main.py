@@ -4,6 +4,7 @@ from lectura import leer_base
 from motor import backward_chain
 import click
 
+
 def consultar(comando, reglas, hechos):
 
     consulta = comando[:-1].strip()  # Quitamos la '?' al final
@@ -22,9 +23,10 @@ def consultar(comando, reglas, hechos):
     else:
         print(f"{consulta}: No")
 
+
 def aniadir_hecho(comando, reglas, hechos):
     try:
-                
+
         cons, verdad = procesar_command(comando)
 
         # Creamos una nueva regla como hecho (sin antecedentes) y la añadimos a la lista
@@ -40,6 +42,7 @@ def aniadir_hecho(comando, reglas, hechos):
         print("Error al agregar el hecho. Formato: add hecho [grado_de_verdad]")
         print(e)
 
+
 def procesar_command(comando):
     # Dividimos el comando para extraer el consecuente
     partes = comando.split()
@@ -50,8 +53,9 @@ def procesar_command(comando):
 
     return cons, verdad
 
+
 def resoler_problema(fichero, reglas, hechos):
-    
+
     # Bucle infinito para recibir los comandos del usuario con click
     while True:
 
@@ -77,6 +81,7 @@ def resoler_problema(fichero, reglas, hechos):
         else:
             print("Comando no reconocido. Usa 'print', 'add' o consulta con '?'.")
 
+
 @click.command()
 @click.argument("base")
 def main(base: Path):
@@ -87,7 +92,7 @@ def main(base: Path):
     # Diccionario que contiene los hechos conocidos (que extraemos de las reglas)
     hechos = {regla.cons: regla.verdad for regla in reglas if regla.es_hecho()}
     resoler_problema(fichero, reglas, hechos)
-    
+
 
 if __name__ == "__main__":
     main()

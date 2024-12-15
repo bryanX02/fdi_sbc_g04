@@ -1,6 +1,7 @@
 from pathlib import Path
 import re
 
+
 class GestorBase:
     def __init__(self):
         # Diccionario para almacenar el contenido de las bases de conocimiento
@@ -20,7 +21,7 @@ class GestorBase:
                 # Concatenar líneas que continúan en la siguiente
                 while not line.endswith("."):
                     next_line = next(file).strip()
-                    line += ' ' + next_line
+                    line += " " + next_line
 
                 # Remover el punto final y dividir en segmentos por ';'
                 line = line.rstrip(".")
@@ -50,14 +51,6 @@ class GestorBase:
         self.contenido_bases[base_path.name] = tripletas
         print(f"SBC_P3> Cargando '{base_path.name}'... OK!")
 
-
-
-
-
-
-
-
-
     def mostrar_contenido(self):
         # Mostramos el contenido de cada base cargada
         for nombre, contenido in self.contenido_bases.items():
@@ -68,4 +61,8 @@ class GestorBase:
 
     def obtener_contenido(self):
         # Retornamos todos los triples almacenados
-        return [triple for contenido in self.contenido_bases.values() for triple in contenido]
+        return [
+            triple
+            for contenido in self.contenido_bases.values()
+            for triple in contenido
+        ]

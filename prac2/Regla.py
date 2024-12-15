@@ -1,4 +1,4 @@
-# Clase cuyos objetos representaran las reglas con sus consultas, antecedentes y grados de verdad 
+# Clase cuyos objetos representaran las reglas con sus consultas, antecedentes y grados de verdad
 class Regla:
 
     # Cada objero Regla requerirá de un consecuente, una lista de antecedentes

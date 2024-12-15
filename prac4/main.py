@@ -34,13 +34,14 @@ KEYWORDS_TO_FILES = {
     "safety car": "rules.txt",
 }
 
+
 def extract_keywords(query, keywords_to_files):
     """
     Extrae palabras clave relevantes de la consulta del usuario.
     Limpia puntuación y hace la búsqueda ignorando mayúsculas y minúsculas.
     """
     # Eliminar puntuación de la consulta
-    translator = str.maketrans('', '', string.punctuation)
+    translator = str.maketrans("", "", string.punctuation)
     cleaned_query = query.translate(translator).lower()
 
     # Separar palabras y buscar palabras clave
@@ -63,24 +64,29 @@ def get_context_from_files(keywords, knowledge_dir, keywords_to_files, debug=Fal
 
     if debug:
         print(f"\n[DEBUG] Searching in files: {', '.join(unique_files)}")
-    
+
     for file in unique_files:
         file_path = os.path.join(knowledge_dir, file)
         if os.path.exists(file_path):
-            with open(file_path, 'r') as f:
+            with open(file_path, "r") as f:
                 context.extend(f.readlines())
         else:
             print(f"Warning: File {file} not found in knowledge base.")
-    
-    return context
 
+    return context
 
 
 # Función principal
 @click.command()
 @click.argument("knowledge_dir", type=click.Path(exists=True))
-@click.option("--model", default="llama3.2:1b", help="Modelo de lenguaje a utilizar con Ollama.")
-@click.option("--debug", is_flag=True, help="Habilita el modo de depuración para mostrar archivos consultados.")
+@click.option(
+    "--model", default="llama3.2:1b", help="Modelo de lenguaje a utilizar con Ollama."
+)
+@click.option(
+    "--debug",
+    is_flag=True,
+    help="Habilita el modo de depuración para mostrar archivos consultados.",
+)
 def main(knowledge_dir, model, debug):
     """
     Aplicación principal del asistente virtual.
@@ -100,10 +106,14 @@ def main(knowledge_dir, model, debug):
         if relevant_keywords:
             if debug:
                 print(f"\n[DEBUG] Keywords detected: {', '.join(relevant_keywords)}")
-            context = get_context_from_files(relevant_keywords, knowledge_dir, KEYWORDS_TO_FILES, debug)
+            context = get_context_from_files(
+                relevant_keywords, knowledge_dir, KEYWORDS_TO_FILES, debug
+            )
         else:
             if debug:
-                print("\n[DEBUG] No relevant keywords found in your query. Using full knowledge base.")
+                print(
+                    "\n[DEBUG] No relevant keywords found in your query. Using full knowledge base."
+                )
             context = []
             if debug:
                 print("\n[DEBUG] Searching in all files:")
@@ -111,25 +121,17 @@ def main(knowledge_dir, model, debug):
                 if file.endswith(".txt"):
                     if debug:
                         print(f"[DEBUG] Reading file: {file}")
-                    with open(os.path.join(knowledge_dir, file), 'r') as f:
+                    with open(os.path.join(knowledge_dir, file), "r") as f:
                         context.extend(f.readlines())
 
         messages = [
+            {"role": "system", "content": "You are a Formula 1 knowledge assistant."},
             {
-                'role': 'system' ,
-                'content': 'You are a Formula 1 knowledge assistant.'
+                "role": "system",
+                "content": f"""answer the user's questions based only on the following information:\n{context}\n""",
             },
-            {
-                'role': 'system' ,
-                'content': f"""answer the user's questions based only on the following information:\n{context}\n"""
-            },
-            {
-                'role': 'user' ,
-                'content': user_query
-            }
-
+            {"role": "user", "content": user_query},
         ]
-        
 
         # Enviamos la consulta al modelo usando Ollama
         try:
@@ -139,6 +141,37 @@ def main(knowledge_dir, model, debug):
         except Exception as e:
             print(f"An error occurred: {e}")
 
+
+# Funcion extra aun sin probar
+def chain_of_thought(user_query, context):
+
+    # Pasos intermedios de razonamiento
+    reasoning_steps = [
+        "Step 1: Identify the user's intent.",
+        "Step 2: Locate relevant information in the provided context.",
+        "Step 3: Analyze and synthesize the information to form a clear response.",
+        "Step 4: Provide the reasoning process and the final answer.",
+    ]
+
+    # mensaje con el razonamiento
+    reasoning_prompt = "\n".join(reasoning_steps)
+    messages = [
+        {"role": "system", "content": "You are a Formula 1 knowledge assistant."},
+        {
+            "role": "system",
+            "content": f"Follow the Chain of Thought reasoning steps:\n{reasoning_prompt}\n"
+            f"The relevant context is:\n{''.join(context)}",
+        },
+        {"role": "user", "content": user_query},
+    ]
+
+    # Generamos una respuesta usando el modelo Ollama
+    try:
+        response = ollama.chat(model="llama3.2:1b", messages=messages)
+        return response["message"]["content"]
+    except Exception as e:
+        return f"An error occurred during reasoning: {e}"
+
+
 if __name__ == "__main__":
     main()
-
