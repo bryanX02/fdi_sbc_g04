@@ -33,6 +33,11 @@ def main(base, script):
                 exportar_grafo(ultimos_resultados, filename)
             else:
                 print("Comando draw no válido. Usa: draw \"nombre_archivo.png\"")
+        elif comando.startswith("add "):
+            # Extraer sujeto, predicado y objeto
+            _, triple = comando.split(" ", 1)
+            sujeto, predicado, objeto = triple.split(",")
+            baseGestor.agregar_triple(sujeto.strip(), predicado.strip(), objeto.strip())
         elif comando == "salir":
             print("Saliendo de la interfaz interactiva.")
             return False

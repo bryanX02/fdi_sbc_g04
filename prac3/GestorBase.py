@@ -69,3 +69,11 @@ class GestorBase:
     def obtener_contenido(self):
         # Retornamos todos los triples almacenados
         return [triple for contenido in self.contenido_bases.values() for triple in contenido]
+
+    def agregar_triple(self, sujeto, predicado, objeto):
+        # Asumimos que todas las entradas van a la base principal, aquí podría ser más específico
+        base_principal = list(self.contenido_bases.keys())[0] if self.contenido_bases else "base_default"
+        if base_principal not in self.contenido_bases:
+            self.contenido_bases[base_principal] = []
+        self.contenido_bases[base_principal].append((sujeto, predicado, objeto))
+        print(f"SBC_P3> Triple agregado a '{base_principal}': ({sujeto}, {predicado}, {objeto})")
