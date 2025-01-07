@@ -1,4 +1,4 @@
-from Regla import Regla
+from conocimiento.Reglas import Regla
 
 
 # Funcion que se encarga de leer, interpretar y cargar la base del conocimiento

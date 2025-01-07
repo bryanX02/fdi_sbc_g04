@@ -1,97 +1,65 @@
 from pathlib import Path
-from Regla import Regla
-from lectura import leer_base
-from motor import backward_chain
+from utils.Lectura import leer_base
+from conocimiento.Motor import backward_chain
+from conocimiento.Reglas import Regla
+from utils.Interpretador import interpretar_add
 import click
 
+# NOTAS: En este modulo principal se implementan las funciones necesarias para resolver el problema
+# Es una nueva version para subir puntos en cuando a la calidad del codigo. Nos aseguramos
+# de que el codigo este bien organizado en modulos y mejor diseño de la arquitectura.
 
-def consultar(comando, reglas, hechos):
-
-    consulta = comando[:-1].strip()  # Quitamos la '?' al final
-
-    # Llamamos al algoritmo de vuelta atras que corroborara la consulta
-    resultado = backward_chain(consulta, reglas, hechos)
-
-    # Interpretamos el resultado
-    if resultado is not None:
-        if resultado >= 0.7:
-            print(f"{consulta}: Sí, mucho ({resultado:.2f})")
-        elif resultado > 0.4:
-            print(f"{consulta}: Sí, un poco ({resultado:.2f})")
-        else:
-            print(f"{consulta}: Sí, pero apenas ({resultado:.2f})")
-    else:
-        print(f"{consulta}: No")
-
-
-def aniadir_hecho(comando, reglas, hechos):
-    try:
-
-        cons, verdad = procesar_command(comando)
-
-        # Creamos una nueva regla como hecho (sin antecedentes) y la añadimos a la lista
-        nueva_regla = Regla(cons, [], verdad)
-        reglas.append(nueva_regla)
-
-        # Añadimos el hecho al diccionario y lo notificamos (no lo pide el profe)
-        hechos[cons] = verdad
-        print(f"Hecho '{cons}' añadido con grado de verdad {verdad}")
-
-    # Si ocurre un error en el try, mostramos un mensaje de error
-    except Exception as e:
-        print("Error al agregar el hecho. Formato: add hecho [grado_de_verdad]")
-        print(e)
-
-
-def procesar_command(comando):
-    # Dividimos el comando para extraer el consecuente
-    partes = comando.split()
-    cons = partes[1]
-
-    # Extraemos el grado de verdad
-    verdad = float(partes[2].replace("[", "").replace("]", ""))
-
-    return cons, verdad
-
-
-def resoler_problema(fichero, reglas, hechos):
-
-    # Bucle infinito para recibir los comandos del usuario con click
+# Interfaz interactiva para resolver consultas y manejar hechos.
+#Args:
+#        reglas (list): Lista de reglas cargadas.
+#        hechos (dict): Diccionario inicial de hechos conocidos.   
+def ejecutar_interfaz(reglas, hechos):
+    
     while True:
-
-        # Leemos el comando del usuario y eliminamos espacios en blanco
         comando = input("> ").strip()
         if comando.lower() == "salir":
             break
-        # Si el comando es 'print', imprimimos todas las reglas de la base de conocimiento
         elif comando == "print":
             for regla in reglas:
                 print(regla)
-        # Intentaremos añadir un nuevo hecho
         elif comando.startswith("add"):
-
-            aniadir_hecho(comando, reglas, hechos)
-
-        # Si el comando termina en '?' corresponde a una consulta
+            try:
+                hecho, verdad = interpretar_add(comando)
+                nueva_regla = Regla(hecho, [], verdad)
+                reglas.append(nueva_regla)
+                hechos[hecho] = verdad
+                print(f"Hecho '{hecho}' añadido con grado de verdad {verdad}")
+            except ValueError as e:
+                print(f"Error: {e}")
         elif comando.endswith("?"):
-
-            consultar(comando, reglas, hechos)
-
-        # Mensaje de ayuda
+            consulta = comando[:-1].strip()
+            resultado = backward_chain(consulta, reglas, hechos)
+            # Interpretamos el resultado
+            if resultado is not None:
+                if resultado >= 0.7:
+                    print(f"{consulta}: Sí, mucho ({resultado:.2f})")
+                elif resultado > 0.4:
+                    print(f"{consulta}: Sí, un poco ({resultado:.2f})")
+                else:
+                    print(f"{consulta}: Sí, pero apenas ({resultado:.2f})")
+            else:
+                print(f"{consulta}: No")
         else:
-            print("Comando no reconocido. Usa 'print', 'add' o consulta con '?'.")
+            print("Comando no reconocido. Usa 'print', 'add' o consultas con '?'. Use 'salir' para terminar.")
 
 
 @click.command()
-@click.argument("base")
-def main(base: Path):
+@click.argument("base", type=Path)
+def main(base):
+    """
+    Punto de entrada principal para cargar una base de conocimiento.
 
-    # Variables
-    fichero = Path(base)  # Archivo que contiene la base
-    reglas = leer_base(fichero)  # Reglas extraidas del fichero
-    # Diccionario que contiene los hechos conocidos (que extraemos de las reglas)
+    Args:
+        base (Path): Archivo con la base de conocimiento.
+    """
+    reglas = leer_base(base)
     hechos = {regla.cons: regla.verdad for regla in reglas if regla.es_hecho()}
-    resoler_problema(fichero, reglas, hechos)
+    ejecutar_interfaz(reglas, hechos)
 
 
 if __name__ == "__main__":

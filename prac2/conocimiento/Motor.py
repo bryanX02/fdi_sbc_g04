@@ -1,6 +1,4 @@
-from Regla import Regla
-
-
+# Funcion que usa el algoritmo de vuelta atras para consultar la veracidad de una regla
 def buscar_grado_minimo(regla, reglas, hechos):
 
     # Calculamos el grado de verdad de los antecedentes

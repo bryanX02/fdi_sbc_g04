@@ -22,13 +22,23 @@ uv run main.py <base_conocimiento.txt>
 ## Estructura del Proyecto
 El proyecto contiene los siguientes archivos:
 
-- `base_laboral.txt` y `base_laboral_2.txt`: Archivos de texto que contienen las bases de conocimiento con las que el motor realiza las consultas.
-- `lectura.py`: Módulo encargado de leer y procesar los archivos de la base de conocimiento.
-- `motor.py`: Módulo principal del motor de inferencia.
-- `main.py`: Script principal para ejecutar el programa.
-- `Regla.py`: Módulo que define la estructura y comportamiento de las reglas en el sistema.
-- `README.md`: Documento con la descripción y guía de uso del proyecto.
-- `pyproject.toml`: Archivo de configuración del proyecto. (aún no implementado)
-- `uv.lock`: Archivo de bloqueo generado por la herramienta `uv`.
+conocimiento           # Nuevos módulos relacionados con lógica de conocimiento
+- `Reglas.py`          # Módulo que define la estructura y comportamiento de las reglas en el sistema.
+- `Motor.py`           # Módulo principal del motor de inferencia.
 
+utils                  # Módulos genéricos no específicos
+- `Lectura.py`         # Funciones de lectura y carga de base de 
+- `Procesador.py`      # Procesamiento de comandos 
+
+`main.py`                # Script principal que usa a los demas módulos
+
+`base_laboral.txt`   # Base del enunciado
+`base_laboral_2.txt` # Base de la formula 1
+`base_musical.txt`   # Base con información musical
+
+`pyproject.toml`         # Configuración del proyecto para herramientas de Python
+
+`uv.lock`: Archivo de bloqueo generado por la herramienta `uv`.
+
+`README.md`              # Documentación principal
 

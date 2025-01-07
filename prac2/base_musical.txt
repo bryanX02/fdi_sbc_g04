@@ -1,0 +1,25 @@
+# Base de conocimiento musical
+
+## Artistas
+beatles :- rock, pop [0.9]
+miles_davis :- jazz [0.95]
+beyonce :- rnb, pop [0.9]
+bob_marley :- reggae [0.95]
+adele :- soul, pop [0.9]
+
+## Géneros Musicales
+rock :- guitarra_electrica, bateria [0.8]
+pop :- melodias_pegajosas, produccion_comercial [0.7]
+jazz :- improvisacion, armonias_complejas [0.9]
+reggae :- ritmos_jamaicanos, mensajes_sociales [0.85]
+rnb :- vocalizacion_suave, ritmos_baile [0.8]
+soul :- emocion_profunda, influencias_gospel [0.9]
+
+## Habilidades
+guitarra_electrica :- tecnica_instrumental, creatividad [0.8]
+bateria :- sentido_ritmico, coordinacion [0.85]
+improvisacion :- espontaneidad, conocimiento_teorico [0.9]
+melodias_pegajosas :- composicion, atractivo_comercial [0.7]
+ritmos_jamaicanos :- percusion_africana, sincopacion [0.8]
+vocalizacion_suave :- control_vocal, expresividad [0.85]
+emocion_profunda :- interpretacion, conexion_audiencia [0.9]
