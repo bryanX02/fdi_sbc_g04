@@ -1,25 +1,25 @@
-# Base de conocimiento musical
+# Base de conocimiento para una empresa de adquisición de talento musical
 
-## Artistas
-beatles :- rock, pop [0.9]
-miles_davis :- jazz [0.95]
-beyonce :- rnb, pop [0.9]
-bob_marley :- reggae [0.95]
-adele :- soul, pop [0.9]
-
-## Géneros Musicales
-rock :- guitarra_electrica, bateria [0.8]
-pop :- melodias_pegajosas, produccion_comercial [0.7]
-jazz :- improvisacion, armonias_complejas [0.9]
-reggae :- ritmos_jamaicanos, mensajes_sociales [0.85]
-rnb :- vocalizacion_suave, ritmos_baile [0.8]
-soul :- emocion_profunda, influencias_gospel [0.9]
+## Trabajos
+compositor :- creatividad, teoria_musical
+productor :- grabacion, mezcla, creatividad [0.9]
+ingeniero_sonido :- grabacion, mezcla, mantenimiento_equipos
+cantante :- tecnica_vocal, interpretacion
+musico :- instrumento, teoria_musical
+director_orquesta :- teoria_musical, liderazgo, musico [0.8]
+arreglista :- teoria_musical, creatividad
+manager :- gestion, soft_skills, networking
 
 ## Habilidades
-guitarra_electrica :- tecnica_instrumental, creatividad [0.8]
-bateria :- sentido_ritmico, coordinacion [0.85]
-improvisacion :- espontaneidad, conocimiento_teorico [0.9]
-melodias_pegajosas :- composicion, atractivo_comercial [0.7]
-ritmos_jamaicanos :- percusion_africana, sincopacion [0.8]
-vocalizacion_suave :- control_vocal, expresividad [0.85]
-emocion_profunda :- interpretacion, conexion_audiencia [0.9]
+creatividad :- inspiracion, improvisacion [0.8]
+teoria_musical :- armonia, composicion [0.9]
+grabacion :- microfonia, software_grabacion [0.7]
+mezcla :- software_grabacion, ecualizacion [0.8]
+instrumento :- guitarra, piano [0.7]
+instrumento :- violin, bateria [0.6]
+tecnica_vocal :- respiracion, afinacion [0.9]
+interpretacion :- expresion, presencia_escenica [0.8]
+liderazgo :- gestion, motivacion [0.7]
+gestion :- planificacion, organizacion [0.8]
+networking :- relaciones_publicas, comunicacion [0.7]
+
