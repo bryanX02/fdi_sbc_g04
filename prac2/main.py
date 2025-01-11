@@ -11,7 +11,7 @@ import click
 
 # Tambien se ha añadido una nueva base del conocimiento siguiendo la rubrica (base_musical.txt)
 # Ejemplo de ejecución:
-'''
+"""
 bryan@bryanSpace:~/sbc_repo/fdi_sbc_g04/prac2$ uv run main.py base_musical.txt
 > print
 compositor :- creatividad, teoria_musical [1.0]
@@ -42,14 +42,15 @@ Hecho 'improvisacion' añadido con grado de verdad 0.8
 > creatividad?
 creatividad: Sí, mucho (0.80)
 > salir
-'''
+"""
+
 
 # Interfaz interactiva para resolver consultas y manejar hechos.
-#Args:
+# Args:
 #        reglas (list): Lista de reglas cargadas.
-#        hechos (dict): Diccionario inicial de hechos conocidos.   
+#        hechos (dict): Diccionario inicial de hechos conocidos.
 def ejecutar_interfaz(reglas, hechos):
-    
+
     # Bucle infinito para recibir los comandos del usuario con click
     while True:
 
@@ -87,7 +88,10 @@ def ejecutar_interfaz(reglas, hechos):
                 print(f"{consulta}: No")
         # Mensaje de ayuda
         else:
-            print("Comando no reconocido. Usa 'print', 'add' o consultas con '?'. Use 'salir' para terminar.")
+            print(
+                "Comando no reconocido. Usa 'print', 'add' o consultas con '?'. Use 'salir' para terminar."
+            )
+
 
 # Funcion principal que llama a la lectura y ejecuta la interfaz
 @click.command()

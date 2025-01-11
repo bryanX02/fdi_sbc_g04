@@ -1,4 +1,3 @@
-
 # Funcione que se encarga de interpretar el comando add de la consola
 # Recibe como parámetro un comando en formato de cadena y devuelve una tupla con la acción y los argumentos.
 def interpretar_add(comando):
