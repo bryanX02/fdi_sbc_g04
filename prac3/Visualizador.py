@@ -1,6 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
+
 def exportar_grafo(resultados, filename):
     if not resultados:
         print("No hay resultados de consulta para visualizar.")
@@ -21,24 +22,20 @@ def exportar_grafo(resultados, filename):
     plt.figure(figsize=(10, 6))
     pos = nx.spring_layout(grafo)
     nx.draw(
-        grafo, pos,
+        grafo,
+        pos,
         with_labels=True,
         node_size=2000,
         node_color="lightblue",
         font_size=10,
         font_weight="bold",
-        arrows=True
+        arrows=True,
     )
-     # Dibujar etiquetas en las aristas
+    # Dibujar etiquetas en las aristas
     edge_labels = {(u, v): d.get("label", "") for u, v, d in grafo.edges(data=True)}
-    nx.draw_networkx_edge_labels(
-        grafo, pos,
-        edge_labels=edge_labels
-    )
+    nx.draw_networkx_edge_labels(grafo, pos, edge_labels=edge_labels)
 
     # Guardar como imagen
     plt.savefig(filename)
     plt.close()
     print(f"SBC_P3> Exportando grafo a '{filename}'... OK!")
-
-

@@ -1,6 +1,7 @@
 from pathlib import Path
 import re
 
+
 class GestorBase:
     def __init__(self):
         # Diccionario para almacenar el contenido de las bases de conocimiento
@@ -20,7 +21,7 @@ class GestorBase:
                 # Concatenar líneas que continúan en la siguiente
                 while not line.endswith("."):
                     next_line = next(file).strip()
-                    line += ' ' + next_line
+                    line += " " + next_line
 
                 # Remover el punto final y dividir en segmentos por ';'
                 line = line.rstrip(".")
@@ -50,14 +51,6 @@ class GestorBase:
         self.contenido_bases[base_path.name] = tripletas
         print(f"SBC_P3> Cargando '{base_path.name}'... OK!")
 
-
-
-
-
-
-
-
-
     def mostrar_contenido(self):
         # Mostramos el contenido de cada base cargada
         for nombre, contenido in self.contenido_bases.items():
@@ -68,12 +61,22 @@ class GestorBase:
 
     def obtener_contenido(self):
         # Retornamos todos los triples almacenados
-        return [triple for contenido in self.contenido_bases.values() for triple in contenido]
+        return [
+            triple
+            for contenido in self.contenido_bases.values()
+            for triple in contenido
+        ]
 
     def agregar_triple(self, sujeto, predicado, objeto):
         # Asumimos que todas las entradas van a la base principal, aquí podría ser más específico
-        base_principal = list(self.contenido_bases.keys())[0] if self.contenido_bases else "base_default"
+        base_principal = (
+            list(self.contenido_bases.keys())[0]
+            if self.contenido_bases
+            else "base_default"
+        )
         if base_principal not in self.contenido_bases:
             self.contenido_bases[base_principal] = []
         self.contenido_bases[base_principal].append((sujeto, predicado, objeto))
-        print(f"SBC_P3> Triple agregado a '{base_principal}': ({sujeto}, {predicado}, {objeto})")
+        print(
+            f"SBC_P3> Triple agregado a '{base_principal}': ({sujeto}, {predicado}, {objeto})"
+        )

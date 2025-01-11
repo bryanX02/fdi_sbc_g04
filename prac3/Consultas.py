@@ -1,6 +1,7 @@
 import re
 from GestorBase import GestorBase
 
+
 def realizar_consulta(gestor_base, consulta):
     # Usamos una expresión regular para dividir la consulta en SELECT y WHERE
     patron = r"select\s+(.*?)\s+where\s*\{(.*?)\}"
@@ -25,11 +26,13 @@ def realizar_consulta(gestor_base, consulta):
         for clausula in clausulas:
             sujeto, predicado, objeto = clausula.split()
             if sujeto in resultado and objeto in resultado:
-                resultados_completos.append({
-                    "sujeto": resultado[sujeto],
-                    "predicado": predicado,
-                    "objeto": resultado[objeto]
-                })
+                resultados_completos.append(
+                    {
+                        "sujeto": resultado[sujeto],
+                        "predicado": predicado,
+                        "objeto": resultado[objeto],
+                    }
+                )
 
     # Mostramos los resultados como tabla
     if resultados_completos:
@@ -37,7 +40,7 @@ def realizar_consulta(gestor_base, consulta):
         encabezado = " | ".join(variables)
         print(encabezado)
         print("-" * len(encabezado))
-        
+
         for resultado in resultados:
             fila = " | ".join(resultado.get(var, "") for var in variables)
             print(fila)
@@ -45,6 +48,7 @@ def realizar_consulta(gestor_base, consulta):
         print("No se encontraron resultados.")
 
     return resultados_completos if resultados_completos else []
+
 
 def backtracking(clausulas, triples, mapeo_actual, indice):
     if indice == len(clausulas):  # Si hemos evaluado todas las cláusulas
@@ -66,6 +70,7 @@ def backtracking(clausulas, triples, mapeo_actual, indice):
 
     return soluciones
 
+
 def evaluar_clausula(triple, sujeto, predicado, objeto, mapeo):
     sujeto_t, predicado_t, objeto_t = triple
 
@@ -77,6 +82,7 @@ def evaluar_clausula(triple, sujeto, predicado, objeto, mapeo):
         return False
 
     return True
+
 
 def coincidir_valor(variable, valor, mapeo):
     if variable.startswith("?"):  # Si es una variable
