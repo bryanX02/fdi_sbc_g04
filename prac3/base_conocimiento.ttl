@@ -1,21 +1,84 @@
-# Base de conocimiento de ejemplo para probar el sistema
+# Base de conocimiento ampliada para probar el sistema
 
+# Definición de personas con nombre y edad
 q1:persona1 wdt:P31 q1:persona ;
     t1:nombre "Alice" ;
-    t1:edad "30" .
+    t1:edad "30" ;
+    t1:trabaja_en q1:empresa1 ;
+    t1:amigo_de q1:persona2 .
 
 q1:persona2 wdt:P31 q1:persona ;
     t1:nombre "Bob" ;
-    t1:edad "25" .
+    t1:edad "25" ;
+    t1:trabaja_en q1:empresa2 ;
+    t1:amigo_de q1:persona3 .
 
 q1:persona3 wdt:P31 q1:persona ;
     t1:nombre "Charlie" ;
-    t1:edad "35" .
+    t1:edad "35" ;
+    t1:reside_en q1:ciudad2 ;
+    t1:es_padre_de q1:persona4 .
 
+q1:persona4 wdt:P31 q1:persona ;
+    t1:nombre "David" ;
+    t1:edad "12" ;
+    t1:estudia_en q1:escuela1 .
+
+q1:persona5 wdt:P31 q1:persona ;
+    t1:nombre "Eva" ;
+    t1:edad "28" ;
+    t1:reside_en q1:ciudad1 ;
+    t1:trabaja_en q1:empresa1 .
+
+# Definición de ciudades con población
 q1:ciudad1 wdt:P31 q1:ciudad ;
     t1:nombre "Madrid" ;
     t1:poblacion "3200000" .
 
+q1:ciudad2 wdt:P31 q1:ciudad ;
+    t1:nombre "Barcelona" ;
+    t1:poblacion "1600000" .
+
+q1:ciudad3 wdt:P31 q1:ciudad ;
+    t1:nombre "Sevilla" ;
+    t1:poblacion "690000" .
+
+# Relaciones de residencia
 q1:persona1 t1:reside_en q1:ciudad1 .
 q1:persona2 t1:reside_en q1:ciudad1 .
+q1:persona3 t1:reside_en q1:ciudad2 .
+q1:persona4 t1:reside_en q1:ciudad2 .
+q1:persona5 t1:reside_en q1:ciudad1 .
+
+# Definición de empresas con sector
+q1:empresa1 wdt:P31 q1:empresa ;
+    t1:nombre "TechCorp" ;
+    t1:sector "Tecnología" .
+
+q1:empresa2 wdt:P31 q1:empresa ;
+    t1:nombre "BioHealth" ;
+    t1:sector "Salud" .
+
+q1:empresa3 wdt:P31 q1:empresa ;
+    t1:nombre "EduLearn" ;
+    t1:sector "Educación" .
+
+# Definición de instituciones educativas
+q1:escuela1 wdt:P31 q1:institucion_educativa ;
+    t1:nombre "Colegio Central" ;
+    t1:ubicado_en q1:ciudad2 .
+
+q1:universidad1 wdt:P31 q1:institucion_educativa ;
+    t1:nombre "Universidad Complutense" ;
+    t1:ubicado_en q1:ciudad1 .
+
+# Definición de vínculos familiares
+q1:persona1 t1:es_padre_de q1:persona4 .
+q1:persona2 t1:es_hermano_de q1:persona3 .
+
+# Definición de eventos
+q1:evento1 wdt:P31 q1:evento ;
+    t1:nombre "Conferencia IA 2023" ;
+    t1:organizado_por q1:empresa1 ;
+    t1:ubicado_en q1:ciudad1 .
 

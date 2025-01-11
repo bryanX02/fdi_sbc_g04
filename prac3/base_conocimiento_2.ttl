@@ -1,6 +1,92 @@
-q1:estudiante wdt:P31 q1:persona ;
-    t1:matriculado q1:asignatura .
-q1:pepe wdt:P31 q1:estudiante ;
-    t1:matriculado q1:SBC .
+# Base de conocimiento ampliada de estudiantes y asignaturas
+
+# Definición de estudiantes con matrícula y asignaturas
+q1:estudiante1 wdt:P31 q1:persona ;
+    t1:nombre "Pepe" ;
+    t1:matriculado q1:SBC ;
+    t1:amigo_de q1:estudiante2 .
+
+q1:estudiante2 wdt:P31 q1:persona ;
+    t1:nombre "Maria" ;
+    t1:matriculado q1:Matematicas ;
+    t1:amigo_de q1:estudiante1 ;
+    t1:amigo_de q1:estudiante3 .
+
+q1:estudiante3 wdt:P31 q1:persona ;
+    t1:nombre "Juan" ;
+    t1:matriculado q1:Fisica ;
+    t1:amigo_de q1:estudiante2 .
+
+q1:estudiante4 wdt:P31 q1:persona ;
+    t1:nombre "Laura" ;
+    t1:matriculado q1:Quimica ;
+    t1:reside_en q1:ciudad2 .
+
+q1:estudiante5 wdt:P31 q1:persona ;
+    t1:nombre "Carlos" ;
+    t1:matriculado q1:SBC ;
+    t1:reside_en q1:ciudad1 .
+
+# Definición de asignaturas con créditos y requisitos
 q1:SBC wdt:P31 q1:asignatura ;
+    t1:nombre "Sistemas Basados en Conocimiento" ;
+    t1:creditos "3" ;
+    t1:requisito q1:Matematicas .
+
+q1:Matematicas wdt:P31 q1:asignatura ;
+    t1:nombre "Matemáticas Avanzadas" ;
+    t1:creditos "6" .
+
+q1:Fisica wdt:P31 q1:asignatura ;
+    t1:nombre "Física General" ;
+    t1:creditos "5" .
+
+q1:Quimica wdt:P31 q1:asignatura ;
+    t1:nombre "Química Básica" ;
+    t1:creditos "4" .
+
+q1:Historia wdt:P31 q1:asignatura ;
+    t1:nombre "Historia Moderna" ;
     t1:creditos "3" .
+
+# Definición de profesores con materias impartidas
+q1:profesor1 wdt:P31 q1:persona ;
+    t1:nombre "Dr. Smith" ;
+    t1:imparte q1:SBC ;
+    t1:trabaja_en q1:universidad1 .
+
+q1:profesor2 wdt:P31 q1:persona ;
+    t1:nombre "Dra. Johnson" ;
+    t1:imparte q1:Matematicas ;
+    t1:trabaja_en q1:universidad1 .
+
+q1:profesor3 wdt:P31 q1:persona ;
+    t1:nombre "Dr. Gómez" ;
+    t1:imparte q1:Fisica ;
+    t1:trabaja_en q1:universidad2 .
+
+# Definición de universidades
+q1:universidad1 wdt:P31 q1:institucion_educativa ;
+    t1:nombre "Universidad Complutense" ;
+    t1:ubicado_en q1:ciudad1 .
+
+q1:universidad2 wdt:P31 q1:institucion_educativa ;
+    t1:nombre "Universidad Autónoma" ;
+    t1:ubicado_en q1:ciudad2 .
+
+# Definición de ciudades
+q1:ciudad1 wdt:P31 q1:ciudad ;
+    t1:nombre "Madrid" ;
+    t1:poblacion "3200000" .
+
+q1:ciudad2 wdt:P31 q1:ciudad ;
+    t1:nombre "Barcelona" ;
+    t1:poblacion "1600000" .
+
+# Relaciones adicionales
+q1:estudiante1 t1:tutorado_por q1:profesor1 .
+q1:estudiante2 t1:tutorado_por q1:profesor2 .
+q1:estudiante3 t1:tutorado_por q1:profesor3 .
+q1:universidad1 t1:ofrece q1:SBC .
+q1:universidad2 t1:ofrece q1:Fisica .
+
